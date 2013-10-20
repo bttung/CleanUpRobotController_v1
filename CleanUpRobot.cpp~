@@ -321,7 +321,7 @@ bool MyController::recognizeTrash(Vector3d &pos, std::string &name)
 
   // ゴミの位置取得
   trash->getPosition(pos);
-	cout << "trashposition " << endl;
+	cout << "trashposition " << end;
 	cout << "trash pos x: " << pos.x() << "y: "<< pos.y() << "z: "<< pos.z();
   
 	return true;

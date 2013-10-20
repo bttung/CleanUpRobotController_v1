@@ -3,8 +3,6 @@
 #include "Logger.h"  
 #include <algorithm>
 
-using namespace std;
-
 #define PI 3.1415926535
 
 //角度からラジアンに変換します
@@ -315,16 +313,11 @@ bool MyController::recognizeTrash(Vector3d &pos, std::string &name)
 
   // ゴミの名前と位置を取得します
   name = m_trashes[trashNum];
-	cout << "trash name: " << name << endl;
-
   SimObj *trash = getObj(name.c_str());
 
   // ゴミの位置取得
   trash->getPosition(pos);
-	cout << "trashposition " << endl;
-	cout << "trash pos x: " << pos.x() << "y: "<< pos.y() << "z: "<< pos.z();
-  
-	return true;
+  return true;
 }
 
 double MyController::rotateTowardObj(Vector3d pos, double velocity, double now)
