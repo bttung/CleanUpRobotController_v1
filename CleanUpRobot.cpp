@@ -135,6 +135,8 @@ double MyController::onAction(ActionEvent &evt)
     // ゴミが見つかった
     else{
 
+			printf("ゴミの座標: %lf %lf %lf \n", m_tpos.x(), m_tpos.y(), m_tpos.z());
+
       // ゴミの方向に回転をはじめる
       m_time = rotateTowardObj(m_tpos, m_vel, evt.time());
       m_state = 1;
@@ -315,15 +317,27 @@ bool MyController::recognizeTrash(Vector3d &pos, std::string &name)
 
   // ゴミの名前と位置を取得します
   name = m_trashes[trashNum];
-	cout << "trash name: " << name << endl;
+	cout << "trash name: " << name << endl ;
 
   SimObj *trash = getObj(name.c_str());
 
   // ゴミの位置取得
   trash->getPosition(pos);
-	cout << "trashposition " << endl;
-	cout << "trash pos x: " << pos.x() << "y: "<< pos.y() << "z: "<< pos.z();
-  
+
+	cout << "trash pos before x: " << pos.x() << "y: "<< pos.y() << "z: "<< pos.z() << endl;
+
+	Vector3d pos2(100, 100, 100);
+	//pos2.x() = 100;
+	//pos2.y() = 100;
+	//pos2.z() = 100;	
+
+	trash->setPosition(pos2);
+
+	trash->getPosition(pos);
+
+	cout << "trash pos after x: " << pos.x() << "y: "<< pos.y() << "z: "<< pos.z() << endl;
+	  
+
 	return true;
 }
 
