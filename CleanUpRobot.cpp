@@ -17,6 +17,9 @@ public:
   void onRecvMsg(RecvMsgEvent &evt); 
   void onCollision(CollisionEvent &evt); 
 
+	// 物体の位置をセットする関数
+	void setObjectPosition(int id, vector3d pos);
+
 
   /* @brief  ゴミを認識しゴミの位置と名前を返す
    * @return  pos ゴミの位置
@@ -86,6 +89,22 @@ private:
   // 初期位置
   Vector3d m_inipos;
 };  
+
+
+void MyController::setObjectPosition(int id, vector3d pos) 
+{
+	// 物体idのセット
+	id %= m_trashes.size();
+	string name = m_trashes[id];
+
+	cout << "trash name: " << name << endl;
+	printf("ゴミを次の位置にセットする %lf %lf %lf\n", pos.x(), pos.y(), pos.z());
+
+	SimObj *trash = getObj(name.c_str());
+
+	// ゴミの位置をセットする
+	trash->setPosition(pos);
+} 
 
 void MyController::onInit(InitEvent &evt) 
 {  
@@ -295,6 +314,39 @@ double MyController::onAction(ActionEvent &evt)
   
 void MyController::onRecvMsg(RecvMsgEvent &evt)
 {  
+	
+  // 送信者取得
+  std::string sender = evt.getSender();
+  std::cout << "sender: " << sender << std::endl;
+
+  char *all_msg = (char*)evt.getMsg();                
+  printf("all_msg: %s \n", all_msg);
+  char *delim = (char *)(" ");
+  char *ctx;
+  char *header = strtok_r(all_msg, delim, &ctx);
+
+	if (sender == "RearrangeRoomLayout") {
+    printf("mess from RearrangeRoomLayout \n");
+
+    if(strcmp(header, "ObjectPosition") == 0) {
+			// object info
+			int id;
+			double x, y, z;
+      
+			id = atoi(strtok_r(NULL, delim, &ctx));
+			x  = atof(strtok_r(NULL, delim, &ctx));
+      y  = atof(strtok_r(NULL, delim, &ctx));
+      z  = atof(strtok_r(NULL, delim, &ctx));
+			printf("ObjectInfo id: %d x: %lf y: %lf z: %lf \n", id, x, y, z);
+      
+			vector3d pos(x, y, z);
+			setObjectPostision(pos);
+		
+			m_executed = true;
+      
+			return;
+    }
+  }
 }  
 
 void MyController::onCollision(CollisionEvent &evt) 
