@@ -340,7 +340,6 @@ void MyController::onRecvMsg(RecvMsgEvent &evt)
 			printf("ObjectInfo id: %d x: %lf y: %lf z: %lf \n", id, x, y, z);
       
 			Vector3d pos(x, y, z);
-			// ゴミの位置をセットする			
 			setObjectPosition(id, pos);
 		      
 			return;
