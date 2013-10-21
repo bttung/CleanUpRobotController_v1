@@ -361,7 +361,7 @@ void MyController::onRecvMsg(RecvMsgEvent &evt)
   char *header = strtok_r(all_msg, delim, &ctx);
 
 	//if (sender == "RearrangeRoomLayout") {
-    	printf("mess from RearrangeRoomLayout \n");
+    printf("mess from RearrangeRoomLayout \n");
 
     //if(strcmp(header, "ObjectPosition") == 0) {
 			// object info
